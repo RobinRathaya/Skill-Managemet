@@ -1,0 +1,4 @@
+CREATE TABLE TRAN_QUIZ_EVAL(ques_id NUMBER ,topic_id NUMBER,level_id NUMBER,score NUMBER,
+CONSTRAINT trn_lvlid_fk  FOREIGN KEY(level_id) REFERENCES QUIZ_LEVELS(level_id),
+CONSTRAINT trn_tpcid_fk FOREIGN KEY(topic_id) REFERENCES QUIZ_TOPICS(topic_id)
+);

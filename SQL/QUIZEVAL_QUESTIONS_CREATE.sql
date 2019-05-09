@@ -1,0 +1,5 @@
+CREATE TABLE QUIZ_QUESTIONS(ques_id number CONSTRAINT ques_pk PRIMARY KEY, question VARCHAR(200) NOT NULL,topic_id NUMBER,
+level_id NUMBER ,
+CONSTRAINT level_id_fk  FOREIGN KEY(level_id) REFERENCES QUIZ_LEVELS(level_id),
+CONSTRAINT topic_id_fk FOREIGN KEY(topic_id) REFERENCES QUIZ_TOPICS(topic_id)
+);

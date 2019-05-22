@@ -1,5 +1,8 @@
 package com.chainsys.dao;
 
+/**
+ * performs topics related methods
+ */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +11,11 @@ import java.util.ArrayList;
 import com.chainsys.model.Topics;
 import com.chainsys.util.ConnectionUtil;
 
+/**
+ * 
+ * 
+ *
+ */
 public class TopicsDAO {
 	public static int addNewTopic(Topics topic) throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
@@ -18,17 +26,32 @@ public class TopicsDAO {
 		ConnectionUtil.close(connection, preparedStatement, null);
 		return rowCount;
 	}
-
-	public int deleteTopic(String topicName) throws Exception {
+/**
+ * 
+ * @param topicId
+ * @return
+ * @throws Exception
+ */
+	public String selectTopicNameById(int topicId) throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
-		String query = "DELETE FROM TABLE quiz_topics WHERE topic_id = (SELECT topic_id FROM quiz_topics WHERE topic_name = ?)";
+		String query = "SELECT topic_name FROM quiz_topics WHERE topic_id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setString(1, topicName);
-		int rowCount = preparedStatement.executeUpdate();
+		preparedStatement.setInt(1, topicId);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		String topicName = "";
+		while (resultSet.next()) {
+			topicName = resultSet.getString("topic_name");
+		}
 		ConnectionUtil.close(connection, preparedStatement, null);
-		return rowCount;
+		return topicName;
 	}
-
+/**
+ * 
+ * @param newTopicName
+ * @param oldTopicName
+ * @return
+ * @throws Exception
+ */
 	public int updateTopicName(String newTopicName, String oldTopicName) throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
 		String query = "UPDATE quiz_topics SET topic_name = ? WHERE topic_id = (SELECT topic_id FROM quiz_topics WHERE topic_name = ?)";
@@ -38,17 +61,23 @@ public class TopicsDAO {
 		int rowCount = preparedStatement.executeUpdate();
 		ConnectionUtil.close(connection, preparedStatement, null);
 		return rowCount;
-
 	}
-
-	public ArrayList<String> getTopics() throws Exception {
+/**
+ * 
+ * @return
+ * @throws Exception
+ */
+	public ArrayList<Topics> getTopics() throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
-		String query = "SELECT topic_name FROM quiz_topics";
+		String query = "SELECT topic_id,topic_name FROM quiz_topics";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		ResultSet resultSet = preparedStatement.executeQuery();
-		ArrayList<String> topicsList = new ArrayList<>();
+		ArrayList<Topics> topicsList = new ArrayList<>();
 		while (resultSet.next()) {
-			topicsList.add(resultSet.getString("topic_name"));
+			Topics topics = new Topics();
+			topics.setId(Integer.parseInt(resultSet.getString("topic_id")));
+			topics.setName(resultSet.getString("topic_name"));
+			topicsList.add(topics);
 		}
 		ConnectionUtil.close(connection, preparedStatement, resultSet);
 		return topicsList;

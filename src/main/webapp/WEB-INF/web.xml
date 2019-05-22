@@ -10,8 +10,48 @@
   	<description></description>
   	<servlet-class>com.chainsys.servlet.AddTopic</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AddTopics</servlet-name>
+  	<display-name>AddTopics</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.AddTopics</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewDetails</servlet-name>
+  	<display-name>ViewDetails</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.ViewDetails</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UploadQuestions</servlet-name>
+  	<display-name>UploadQuestions</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.UploadQuestions</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CreateTest</servlet-name>
+  	<display-name>CreateTest</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.CreateTest</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>AddTopic</servlet-name>
   	<url-pattern>/AddTopic</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddTopics</servlet-name>
+  	<url-pattern>/AddTopics</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewDetails</servlet-name>
+  	<url-pattern>/ViewDetails</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadQuestions</servlet-name>
+  	<url-pattern>/UploadQuestions</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CreateTest</servlet-name>
+  	<url-pattern>/CreateTest</url-pattern>
   </servlet-mapping>
 </web-app>

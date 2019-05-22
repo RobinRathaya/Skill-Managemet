@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.chainsys.model.Questions;
+import com.chainsys.model.Topics;
 import com.chainsys.util.ConnectionUtil;
 
 public class QuestionsDAO {
@@ -17,10 +18,29 @@ public class QuestionsDAO {
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, questions.getQuestion());
 		preparedStatement.setInt(2, questions.getTopic().getId());
-		preparedStatement.setInt(3, questions.getLevel().getId());
 		int rowCount = preparedStatement.executeUpdate();
 		ConnectionUtil.close(connection, preparedStatement, null);
 		return rowCount;
+	}
+
+	public int addBatchOfQueestions(ArrayList<Questions> questionsList) {
+
+		try {
+			Connection connection = ConnectionUtil.getConnection();
+			String query = "INSERT INTO quiz_questions VALUES(QUIZEVAL_QUES_SEQ.nextVal,?,?,?,?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			for (Questions question : questionsList) {
+				preparedStatement.setString(1, question.getQuestion());
+				preparedStatement.setInt(2, question.getTopic().getId());
+				preparedStatement.setString(3, question.getOptions());
+				preparedStatement.setString(4, question.getAnswers());
+				preparedStatement.addBatch();
+			}
+			preparedStatement.executeBatch();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public int deleteQuestion(String question) throws Exception {
@@ -37,9 +57,7 @@ public class QuestionsDAO {
 		List<Questions> listOfQues = new ArrayList<Questions>();
 		Questions question = null;
 		Connection connection = ConnectionUtil.getConnection();
-		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q"
-				+ "INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id AND t.topic_name = ? ) AS topic_name"
-				+ "INNER JOIN quiz_levels l ON (q.level_id = l.level_id) AS level";
+		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id AND t.topic_name = ? ) AS topic_name INNER JOIN quiz_levels l ON (q.level_id = l.level_id) AS level";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, topic);
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -49,12 +67,9 @@ public class QuestionsDAO {
 			question.setQuestion((resultSet.getString("q.question")));
 			question.getTopic().setId(resultSet.getInt("q.topic_id"));
 			question.getTopic().setName(resultSet.getString("topic_name"));
-			question.getLevel().setId(resultSet.getInt("q.level_id"));
-			question.getLevel().setType(resultSet.getString("level_name"));
 			listOfQues.add(question);
 		}
 		ConnectionUtil.close(connection, preparedStatement, resultSet);
-
 		return listOfQues;
 	}
 
@@ -62,9 +77,7 @@ public class QuestionsDAO {
 		List<Questions> listOfQues = new ArrayList<Questions>();
 		Questions question = null;
 		Connection connection = ConnectionUtil.getConnection();
-		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q"
-				+ "INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id) AS topic_name"
-				+ "INNER JOIN quiz_levels l ON (q.level_id = l.level_id AND l.level_name = ?) AS level";
+		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id) AS topic_name INNER JOIN quiz_levels l ON (q.level_id = l.level_id AND l.level_name = ?) AS level";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, level);
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -74,12 +87,31 @@ public class QuestionsDAO {
 			question.setQuestion((resultSet.getString("q.question")));
 			question.getTopic().setId(resultSet.getInt("q.topic_id"));
 			question.getTopic().setName(resultSet.getString("topic_name"));
-			question.getLevel().setId(resultSet.getInt("q.level_id"));
-			question.getLevel().setType(resultSet.getString("level_name"));
-			listOfQues.add(question);		
+			listOfQues.add(question);
 		}
 		ConnectionUtil.close(connection, preparedStatement, resultSet);
 		return listOfQues;
 	}
 
+	public ArrayList<Questions> viewAll() throws Exception {
+		ArrayList<Questions> listOfQues = new ArrayList<Questions>();
+		Connection connection = ConnectionUtil.getConnection();
+		String query = "SELECT q.ques_id AS quesid,q.question AS ques,q.topic_id AS topicid,t.topic_name AS topicname,q.options AS options,q.answer as answer FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id)";
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Questions question = new Questions();
+			Topics topic = new Topics();
+			question.setId(resultSet.getInt("quesid"));
+			question.setQuestion((resultSet.getString("ques")));
+			topic.setId(resultSet.getInt("topicid"));
+			topic.setName(resultSet.getString("topicname"));
+			question.setTopic(topic);
+			question.setOptions(resultSet.getString("options"));
+			question.setAnswers((resultSet.getString("answer")));
+			listOfQues.add(question);
+		}
+		ConnectionUtil.close(connection, preparedStatement, resultSet);
+		return listOfQues;
+	}
 }

@@ -1,31 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-	
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<title>Insert title here</title>
-</head>
-<body>
-<div class="container">
-	<form method="POST" action="AddTopic">
-  <div class="form-group">
-    <label for="topic">Enter Topic Name</label>
-    <input type="text" class="form-control" id="topic" placeholder="Enter topic" name="topic">
-  </div>
- <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-</form>
+<%@ include file="header.jsp"%>
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>
+			Add Topic <small>Create New Topic</small>
+		</h1>
+	</section>
+
+	<!-- Main content -->
+	<section class="content container-fluid">
+		<div class="container">
+			<div class="row">
+
+				<form class="col s12 add-form" method="POST" action="AddTopics">
+					<div class="form-group">
+						<label class="add-label" for="exampleInputPassword1">Topic Name</label> <input
+							type="password" class="form-control" id="exampleInputPassword1"
+							placeholder="Topic Name" required>
+					</div>
+					<button type="submit" class="btn btn-primary">Add Topic</button>
+				</form>
+			</div>
+			<%
+				if (request.getAttribute("message") != null) {
+					String alertMsg = (String) request.getAttribute("message");
+					if (alertMsg.equals("success")) {
+						out.print("<script>alert(('Topic add successfully'));</script>");
+					} else if (alertMsg.equals("failed")) {
+						out.print("<script>alert(('Topic failed to add'));</script>");
+					}
+				}
+			%>
+
+		</div>
+	</section>
+	<!-- /.content -->
 </div>
-	<div>
-		<%
-			if (request.getAttribute("message") != null)
-				out.print(request.getAttribute("message"));
-		%>
-	</div>
+<!-- /.content-wrapper -->
+</div>
 </body>
-</html>
+<%@ include file="footer.jsp"%>

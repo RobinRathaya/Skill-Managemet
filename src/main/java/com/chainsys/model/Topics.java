@@ -21,11 +21,6 @@ public class Topics {
 	}
 
 	@Override
-	public String toString() {
-		return "Topics [id=" + id + ", name=" + name + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -53,4 +48,8 @@ public class Topics {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Topics [id=" + id + ", name=" + name + "]";
+	}
 }

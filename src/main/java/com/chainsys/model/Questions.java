@@ -3,59 +3,50 @@ package com.chainsys.model;
 public class Questions {
 	private int id;
 	private String question;
+	private String options;
+	private String answers;
 	Topics topic;
-	Levels level;
-
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getQuestion() {
 		return question;
 	}
-
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
+	}
+	public String getAnswers() {
+		return answers;
+	}
+	public void setAnswers(String answers) {
+		this.answers = answers;
+	}
 	public Topics getTopic() {
 		return topic;
 	}
-
 	public void setTopic(Topics topic) {
 		this.topic = topic;
 	}
-
-	public Levels getLevel() {
-		return level;
-	}
-
-	public void setLevel(Levels level) {
-		this.level = level;
-	}
-
-	@Override
-	public String toString() {
-		return "Questions [id=" + id + ", question=" + question + ", topic="
-				+ topic + ", level=" + level + "]";
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((answers == null) ? 0 : answers.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((level == null) ? 0 : level.hashCode());
-		result = prime * result
-				+ ((question == null) ? 0 : question.hashCode());
+		result = prime * result + ((options == null) ? 0 : options.hashCode());
+		result = prime * result + ((question == null) ? 0 : question.hashCode());
 		result = prime * result + ((topic == null) ? 0 : topic.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,12 +56,17 @@ public class Questions {
 		if (getClass() != obj.getClass())
 			return false;
 		Questions other = (Questions) obj;
+		if (answers == null) {
+			if (other.answers != null)
+				return false;
+		} else if (!answers.equals(other.answers))
+			return false;
 		if (id != other.id)
 			return false;
-		if (level == null) {
-			if (other.level != null)
+		if (options == null) {
+			if (other.options != null)
 				return false;
-		} else if (!level.equals(other.level))
+		} else if (!options.equals(other.options))
 			return false;
 		if (question == null) {
 			if (other.question != null)
@@ -84,5 +80,9 @@ public class Questions {
 			return false;
 		return true;
 	}
-
+	@Override
+	public String toString() {
+		return "Questions [id=" + id + ", question=" + question + ", options=" + options + ", answers=" + answers
+				+ ", topic=" + topic + "]";
+	}
 }

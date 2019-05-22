@@ -15,8 +15,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.chainsys.model.Topics;
-import com.chainsys.services.ImportService;
-import com.chainsys.services.TopicDisplayService;
+import com.chainsys.services.QuestionService;
+import com.chainsys.services.TopicService;
 import com.google.gson.Gson;
 
 /**
@@ -45,16 +45,16 @@ public class UploadQuestions extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			TopicDisplayService topicDisplayService = new TopicDisplayService();
-			try {
-				ArrayList<Topics> topicsList=topicDisplayService.displayTopics();
-				Gson gson = new Gson();
-				String topics = gson.toJson(topicsList);
-				response.getWriter().write(topics);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		TopicService topicService = new TopicService();
+		try {
+			ArrayList<Topics> topicsList = topicService.displayTopics();
+			Gson gson = new Gson();
+			String topics = gson.toJson(topicsList);
+			response.getWriter().write(topics);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -70,24 +70,24 @@ public class UploadQuestions extends HttpServlet {
 			ServletFileUpload servletFileUpload = new ServletFileUpload(factory);
 			servletFileUpload.setFileSizeMax(maxFileSize);
 			servletFileUpload.setSizeMax(maxRequestSize);
-			String uploadPath ="C:\\Users\\robi2116\\Downloads\\";
+			String uploadPath = "C:\\Users\\robi2116\\Downloads\\";
 			try {
-				ImportService importService = new ImportService();
+				QuestionService questionService = new QuestionService();
 				List<FileItem> formItems = servletFileUpload.parseRequest(request);
 				if (formItems != null && formItems.size() > 0) {
-					int topicId=0;
+					int topicId = 0;
 					String filePath = "";
 					String fileName = "";
 					for (FileItem fileItem : formItems) {
 						if (fileItem.isFormField()) {
-			                String fieldValue = fileItem.getString();
-			                topicId=Integer.parseInt(fieldValue);
+							String fieldValue = fileItem.getString();
+							topicId = Integer.parseInt(fieldValue);
 						} else {
 							fileName = new File(fileItem.getName()).getName();
 							filePath = uploadPath + File.separator + fileName;
 						}
 					}
-					importService.importToExcel(filePath,topicId,fileName);
+					questionService.importFromExcel(filePath, topicId, fileName);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -13,9 +13,9 @@
 
 				<form class="col s12 add-form" method="POST" action="AddTopics">
 					<div class="form-group">
-						<label class="add-label" for="exampleInputPassword1">Topic Name</label> <input
-							type="text" class="form-control" id="exampleInputPassword1"
-							placeholder="Topic Name" required>
+						<label class="add-label" for="exampleInputPassword1">Topic
+							Name</label> <input type="text" class="form-control"
+							id="exampleInputPassword1" placeholder="Topic Name" name="topic" required>
 					</div>
 					<button type="submit" class="btn btn-primary">Add Topic</button>
 				</form>
@@ -28,6 +28,10 @@
 					} else if (alertMsg.equals("failed")) {
 						out.print("<script>alert(('Topic failed to add'));</script>");
 					}
+					else{
+						out.print("<script>alert(('Topic failed to add'));</script>");
+					}
+						
 				}
 			%>
 		</div>

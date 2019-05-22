@@ -20,7 +20,6 @@ public class Validator {
 		}
 		return isNotContain;
 	}
-
 	public Boolean checkForTemplate(Sheet sheet,String fileName) throws TestifyExceptions {
 		Boolean isTrue = false;
 		Row row = sheet.getRow(0);

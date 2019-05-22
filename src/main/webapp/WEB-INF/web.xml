@@ -29,16 +29,22 @@
   	<servlet-class>com.chainsys.servlet.UploadQuestions</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>CreateTest</servlet-name>
-  	<display-name>CreateTest</display-name>
+  	<servlet-name>TestManagement</servlet-name>
+  	<display-name>TestManagement</display-name>
   	<description></description>
-  	<servlet-class>com.chainsys.servlet.CreateTest</servlet-class>
+  	<servlet-class>com.chainsys.servlet.TestManagement</servlet-class>
   </servlet>
   <servlet>
   	<servlet-name>AddQuestion</servlet-name>
   	<display-name>AddQuestion</display-name>
   	<description></description>
   	<servlet-class>com.chainsys.servlet.AddQuestion</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UploadStudents</servlet-name>
+  	<display-name>UploadStudents</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.UploadStudents</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>AddTopic</servlet-name>
@@ -57,11 +63,15 @@
   	<url-pattern>/UploadQuestions</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>CreateTest</servlet-name>
-  	<url-pattern>/CreateTest</url-pattern>
+  	<servlet-name>TestManagement</servlet-name>
+  	<url-pattern>/TestManagement</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>AddQuestion</servlet-name>
   	<url-pattern>/AddQuestion</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadStudents</servlet-name>
+  	<url-pattern>/UploadStudents</url-pattern>
   </servlet-mapping>
 </web-app>

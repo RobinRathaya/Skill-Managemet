@@ -3,8 +3,8 @@ package com.chainsys.services;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import org.apache.catalina.tribes.util.Arrays;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
@@ -19,7 +19,7 @@ import com.chainsys.model.Topics;
 import com.chainsys.validation.Validator;
 
 public class QuestionService {
-	public Boolean importToExcel(String filePath, int topicId, String fileName) throws Exception {
+	public Boolean importFromExcel(String filePath, int topicId, String fileName) throws Exception {
 		try {
 			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			Validator validator = new Validator();
@@ -48,29 +48,30 @@ public class QuestionService {
 				questionsDAO.addBatchOfQueestions(questionList);
 			}
 		} catch (EncryptedDocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
-	public void addQuestion(Questions question,String[]options,int optionId)
-	{
-		question.setAnswers(options[optionId-1]);
+
+	public String addQuestion(Questions question, String[] options, int optionId) {
+		String message = "";
+		question.setAnswers(options[optionId - 1]);
 		question.setOptions(Arrays.toString(options));
-		QuestionsDAO questionsDAO =new QuestionsDAO();
+		QuestionsDAO questionsDAO = new QuestionsDAO();
 		try {
-			questionsDAO.addNewQuestion(question);
+			int statusId = questionsDAO.addNewQuestion(question);
+			if (statusId > 0) {
+				message = "success";
+			} else {
+				message = "failed";
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return message;
 	}
-
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.chainsys.customExceptions.TestifyExceptions;
-import com.chainsys.services.AddTopicService;
+import com.chainsys.services.TopicService;
 
 /**
  * Servlet implementation class AddTopics
@@ -45,18 +45,27 @@ public class AddTopics extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String message = "";
+		RequestDispatcher rd =null;
 		String topicName = request.getParameter("topic");
-		AddTopicService addTopicService = new AddTopicService();
-		try {
-			String message = addTopicService.addNewTopic(topicName);
-			request.setAttribute("message", message);
-			RequestDispatcher rd = request.getRequestDispatcher("addtopic.jsp");
+		if (!topicName.isEmpty()) {
+			TopicService topicService = new TopicService();
+			try {
+				message = topicService.addNewTopic(topicName);
+				request.setAttribute("message", message);
+				rd = request.getRequestDispatcher("addtopic.jsp");
+				rd.forward(request, response);
+			} catch (TestifyExceptions e) {
+				request.setAttribute("message", message);
+				rd = request.getRequestDispatcher("addtopic.jsp");
+				rd.forward(request, response);
+				e.printStackTrace();
+			}
+		} else {
+			message = "invalid input";
+			rd = request.getRequestDispatcher("addtopic.jsp");
 			rd.forward(request, response);
-		} catch (TestifyExceptions e) {
-			request.setAttribute("message", "failed");
-			RequestDispatcher rd = request.getRequestDispatcher("addtopic.jsp");
-			rd.forward(request, response);
-			e.printStackTrace();
 		}
+		
 	}
 }

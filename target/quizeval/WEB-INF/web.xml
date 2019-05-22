@@ -10,8 +10,68 @@
   	<description></description>
   	<servlet-class>com.chainsys.servlet.AddTopic</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>AddTopics</servlet-name>
+  	<display-name>AddTopics</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.AddTopics</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ViewDetails</servlet-name>
+  	<display-name>ViewDetails</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.ViewDetails</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UploadQuestions</servlet-name>
+  	<display-name>UploadQuestions</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.UploadQuestions</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>TestManagement</servlet-name>
+  	<display-name>TestManagement</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.TestManagement</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AddQuestion</servlet-name>
+  	<display-name>AddQuestion</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.AddQuestion</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>UploadStudents</servlet-name>
+  	<display-name>UploadStudents</display-name>
+  	<description></description>
+  	<servlet-class>com.chainsys.servlet.UploadStudents</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>AddTopic</servlet-name>
   	<url-pattern>/AddTopic</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddTopics</servlet-name>
+  	<url-pattern>/AddTopics</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewDetails</servlet-name>
+  	<url-pattern>/ViewDetails</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadQuestions</servlet-name>
+  	<url-pattern>/UploadQuestions</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TestManagement</servlet-name>
+  	<url-pattern>/TestManagement</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AddQuestion</servlet-name>
+  	<url-pattern>/AddQuestion</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UploadStudents</servlet-name>
+  	<url-pattern>/UploadStudents</url-pattern>
   </servlet-mapping>
 </web-app>

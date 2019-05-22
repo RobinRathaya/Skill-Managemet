@@ -1,0 +1,72 @@
+<%@ include file="header.jsp"%>
+<div class="content-wrapper">
+	<section class="content-header">
+		<h1>
+			Add Topic <small>Create New Topic</small>
+		</h1>
+	</section>
+
+	<!-- Main content -->
+	<section class="content container-fluid">
+		<div class="container">
+			<div class="row">
+				<div class="form-contain">
+					<div class="row">
+						<form class="col s12" method="post" action="UploadQuestions"
+							enctype="multipart/form-data">
+							<div class="row">
+								<div class="input-field col s12">
+									<select name="topic" id="topic">
+										<option value="" disabled selected>Choose your Topic</option>
+									</select> <label>Select Topic</label>
+								</div>
+							</div>
+							<div class="row">
+								<a class="waves-effect waves-light btn blue"
+									href="Documents/Questions.xlsx"> Download Template </a>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input class="fileUpload" type="file" name="file"
+										id="attach_file">
+								</div>
+							</div>
+							<div class="row">
+								<button class="waves-effect waves-light btn blue" type="submit">Import
+									Questions</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+		$(document).ready(function() {
+			$("select").formSelect();
+			console.log("Hello")
+			$.ajax({url: "UploadQuestions", success: function(res){
+				var data = JSON.parse(res);
+				$("select").empty();
+				data.forEach((d,i) => {
+					var index = (i + 1);
+					$("select").append("<option value=" + index + ">" + d + "</option>");	
+				});
+				$("select").formSelect();
+			}});
+		});
+		
+	</script>
+</body>
+</body>
+<%@ include file="footer.jsp"%>
+

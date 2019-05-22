@@ -203,5 +203,27 @@ public class StudentActionsDAO {
 		}
 		return success;
 	}
+	public int addBatchOfStudents(ArrayList<Student> studentList) {
+
+		try {
+			Connection connection = ConnectionUtil.getConnection();
+			String query = "INSERT INTO trn_student_info(id,name,email_id,phone_number,user_name,password,created_by,created_date) VALUESVALUES(student_id_seq.nextval,?,?,?,?,?,?,?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			for (Student student : studentList) {
+				preparedStatement.setString(1, student.getName());
+				preparedStatement.setString(2, student.getEmail());
+				preparedStatement.setString(3, student.getPhonenumber());
+				preparedStatement.setString(4, student.getUserName());
+				preparedStatement.setString(5, student.getUserName());
+				preparedStatement.setInt(6, student.getCreatedBy());
+				preparedStatement.setTimestamp(7, Timestamp.valueOf(student.getModifiedDate()));
+				preparedStatement.addBatch();
+			}
+			preparedStatement.executeBatch();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 
 }

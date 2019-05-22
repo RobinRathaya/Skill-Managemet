@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/toggle.css" />
+        <link rel="stylesheet" href="./css/popup.css" />
+        <title>Quiz App</title>
+    </head>
+    <body>
+        <div class="container admin">
+            <div class="row">
+                <div class="col s12 l4 ad-col">
+                    <div class="cont">
+                        <div class="title-cont-mana">Add Topic</div>
+                        <div class="switch">
+                            <input
+                                name="vehicle1"
+                                value="Bike"
+                                id="myswitch"
+                                type="checkbox"
+                            />
+                            <label for="myswitch"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 l4 ad-col">
+                    <div class="cont">
+                        <div class="title-cont-mana">Delete Topic</div>
+                        <div class="switch">
+                            <input
+                                name="vehicle1"
+                                value="Bike"
+                                id="myswitch"
+                                type="checkbox"
+                            />
+                            <label for="myswitch"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 l4 ad-col">
+                    <div class="cont">
+                        <div class="title-cont-mana">Import Questions</div>
+                        <div class="switch">
+                            <input
+                                name="vehicle1"
+                                value="Bike"
+                                id="myswitch"
+                                type="checkbox"
+                            />
+                            <label for="myswitch"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <button
+                            class="waves-effect waves-light btn blue btn-open"
+                        >
+                            Next
+                        </button>
+                        <button class="waves-effect waves-light btn blue">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="overlay"></div>
+        <div class="wrapper">
+            <div class="container">
+                <div class="pop-up">
+                    <div class="pop-body">
+                        <button class="btn-close">X</button>
+                        <form class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        class="validate"
+                                        required
+                                    />
+                                    <label for="name">Quiz Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input
+                                        id="time"
+                                        type="time"
+                                        class="validate"
+                                        required
+                                    />
+                                    <label for="time">Time For Quiz</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input
+                                        id="date"
+                                        type="date"
+                                        class="validate"
+                                        required
+                                    />
+                                    <label for="date">Quiz Date</label>
+                                </div>
+                            </div>
+                            <div class="row add-btn">
+                                <button
+                                    class="waves-effect waves-light btn blue"
+                                >
+                                    Create Quiz
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="./js/popup.js"></script>
+    </body>
+</html>

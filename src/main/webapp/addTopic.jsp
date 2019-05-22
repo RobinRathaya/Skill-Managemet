@@ -14,7 +14,7 @@
 				<form class="col s12 add-form" method="POST" action="AddTopics">
 					<div class="form-group">
 						<label class="add-label" for="exampleInputPassword1">Topic Name</label> <input
-							type="password" class="form-control" id="exampleInputPassword1"
+							type="text" class="form-control" id="exampleInputPassword1"
 							placeholder="Topic Name" required>
 					</div>
 					<button type="submit" class="btn btn-primary">Add Topic</button>
@@ -30,7 +30,6 @@
 					}
 				}
 			%>
-
 		</div>
 	</section>
 	<!-- /.content -->

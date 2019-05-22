@@ -51,7 +51,7 @@
 				$("select").empty();
 				data.forEach((d,i) => {
 					var index = (i + 1);
-					$("select").append("<option value=" + d + ">" + d + "</option>");	
+					$("select").append("<option value=" + d.id + ">" + d.name + "</option>");	
 				});
 			}});
 		});

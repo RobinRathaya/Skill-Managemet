@@ -10,19 +10,40 @@ import com.chainsys.model.Questions;
 import com.chainsys.model.Topics;
 import com.chainsys.util.ConnectionUtil;
 
+/**
+ * Represents a question added in a topic
+ * A topic can have many questions
+ * 
+ *
+ */
 public class QuestionsDAO {
 
-	public int addNewQuestion(Questions questions) throws Exception {
+	/**
+	 * Create a new question 
+	 * question object includes question id,question,topic id,options and answers
+	 * @param question
+	 * @return the row count after executing query
+	 * @throws Exception
+	 */
+	public int addNewQuestion(Questions question) throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
-		String query = "INSERT INTO questions VALUES(QUIZEVAL_QUES_SEQ.nextVal,?,?,?)";
+		String query = "INSERT INTO quiz_questions VALUES(QUIZEVAL_QUES_SEQ.nextVal,?,?,?,?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setString(1, questions.getQuestion());
-		preparedStatement.setInt(2, questions.getTopic().getId());
+		preparedStatement.setString(1, question.getQuestion());
+		preparedStatement.setInt(2, question.getTopic().getId());
+		preparedStatement.setString(3, question.getOptions());
+		preparedStatement.setString(4, question.getAnswers());
 		int rowCount = preparedStatement.executeUpdate();
 		ConnectionUtil.close(connection, preparedStatement, null);
 		return rowCount;
 	}
-
+	
+	/**
+	 * Creates a list of question
+	 * Questions are imported from excel sheet
+	 * @param questionsList a ArrayList of questions included members of question class
+	 * @return rowCount the count of effect rows
+	 */
 	public int addBatchOfQueestions(ArrayList<Questions> questionsList) {
 
 		try {
@@ -43,16 +64,6 @@ public class QuestionsDAO {
 		return 0;
 	}
 
-	public int deleteQuestion(String question) throws Exception {
-		Connection connection = ConnectionUtil.getConnection();
-		String query = "DELETE FROM TABLE quiz_questions WHERE ques_id = (SELECT ques_id FROM quiz_questions WHERE question = ?)";
-		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setString(1, question);
-		int rowCount = preparedStatement.executeUpdate();
-		ConnectionUtil.close(connection, preparedStatement, null);
-		return rowCount;
-	}
-
 	public List<Questions> viewByTopic(String topic) throws Exception {
 		List<Questions> listOfQues = new ArrayList<Questions>();
 		Questions question = null;
@@ -60,26 +71,6 @@ public class QuestionsDAO {
 		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id AND t.topic_name = ? ) AS topic_name INNER JOIN quiz_levels l ON (q.level_id = l.level_id) AS level";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, topic);
-		ResultSet resultSet = preparedStatement.executeQuery();
-		while (resultSet.next()) {
-			question = new Questions();
-			question.setId(resultSet.getInt("q.ques_id"));
-			question.setQuestion((resultSet.getString("q.question")));
-			question.getTopic().setId(resultSet.getInt("q.topic_id"));
-			question.getTopic().setName(resultSet.getString("topic_name"));
-			listOfQues.add(question);
-		}
-		ConnectionUtil.close(connection, preparedStatement, resultSet);
-		return listOfQues;
-	}
-
-	public List<Questions> viewByLevel(String level) throws Exception {
-		List<Questions> listOfQues = new ArrayList<Questions>();
-		Questions question = null;
-		Connection connection = ConnectionUtil.getConnection();
-		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id) AS topic_name INNER JOIN quiz_levels l ON (q.level_id = l.level_id AND l.level_name = ?) AS level";
-		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		preparedStatement.setString(1, level);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			question = new Questions();

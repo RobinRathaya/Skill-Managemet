@@ -33,6 +33,7 @@ public class StudentInfo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("request");
+		System.out.println(action);
 		StudentService studentService= new StudentService();
 		RequestDispatcher requestDispatcher = null;
 		List<Student> studentDetailsList = null;

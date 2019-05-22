@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.chainsys.customExceptions.TestifyExceptions;
 import com.chainsys.services.AddTopicService;
 
-import oracle.jdbc.driver.Message;
-
 /**
  * Servlet implementation class AddTopics
  */

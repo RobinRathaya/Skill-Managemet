@@ -10,11 +10,11 @@
 	<section class="content container-fluid">
 		<div class="container">
 			<div class="row">
-				<form class="form-quest">
+				<form class="form-quest" method="post" action="AddQuestion">
 					<div class="container">
 						<div class="row">
 							<div class="form-group col-md-12">
-								<label for="exampleFormControlSelect1">Example select</label> <select
+								<label for="exampleFormControlSelect1">Select Topic</label> <select
 									class="form-control select-topic"
 									id="exampleFormControlSelect1" name="topic">
 								</select>
@@ -70,7 +70,7 @@
 <script>
 $(document).ready(function() { $.ajax({url: "UploadQuestions", success:
 function(res){ var data = JSON.parse(res); $(".select-topic").empty();
-data.forEach((d,i) => { var index = (i + 1); $(".select-topic").append("<option value=" + d + ">" + d + "</option>"); }); }}); });
+data.forEach((d,i) => { var index = (i + 1); $(".select-topic").append("<option value=" + d.id + ">" + d.name + "</option>"); }); }}); });
 </script>
 </body>
 <%@ include file="footer.jsp"%>

@@ -2,7 +2,7 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
-			Upload Students <small>Create students</small>
+			Bulk Questions <small>Add Bulk Questions</small>
 		</h1>
 	</section>
 
@@ -20,13 +20,13 @@
 							</div>
 							<div class="add-flex">
 								<div class="row btn-imp">
-									<a class="btn btn-success" href="Documents/Users.xlsx">
+									<a class="btn btn-success" href="Documents/Questions.xlsx">
 										Download Template </a>
 								</div>
 								<div class="row upload-ques">
 									<div class="input-field col s12">
 										<input class="fileUpload" type="file" name="file"
-											id="attach_file">
+											id="attach_file" required>
 									</div>
 								</div>
 							</div>
@@ -36,8 +36,23 @@
 							</div>
 						</form>
 					</div>
+					<%
+				if (request.getAttribute("message") != null) {
+					String alertMsg = (String) request.getAttribute("message");
+					if (alertMsg.equals("success")) {
+						out.print("<script>alert(('Topic add successfully'));</script>");
+					} else if (alertMsg.equals("failed")) {
+						out.print("<script>alert(('Topic failed to add'));</script>");
+					}
+					else{
+						out.print("<script>alert(('Topic failed to add'));</script>");
+					}
+						
+				}
+			%>
 				</div>
 			</div>
+			
 		</div>
 	</section>
 	<!-- /.content -->

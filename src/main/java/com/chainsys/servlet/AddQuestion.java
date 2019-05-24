@@ -57,7 +57,6 @@ public class AddQuestion extends HttpServlet {
 			int optionId = Integer.parseInt(request.getParameter("answer"));
 			QuestionService questionService = new QuestionService();
 			message = questionService.addQuestion(question, options, optionId);
-
 		} else {
 			message="Invalid Input";
 		}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/statistics.css" />
+<title>Quiz App</title>
+</head>
+<body>
+	<div class="container main-cont">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div id="error">No results found</div>
+				<table class="table">
+					<thead class="thead">
+						<tr>
+							<th scope="col">Sno</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone number</th>
+							<th scope="col">User Name</th>
+						</tr>
+					</thead>
+					<tbody class="tbody">
+						<!-- <tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>markantony</td>
+							<td><buttom class="btn-warning btn">Edit</buttom>&nbsp;&nbsp;&nbsp;<buttom
+									class="btn-danger btn">Delete</buttom></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Mark</td>
+							<td>markantony</td>
+							<td>
+								<button class="btn-warning btn">Edit</button>&nbsp;&nbsp;&nbsp;
+								<button class="btn-danger btn">Delete</button>
+							</td>
+						</tr> -->
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+</body>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url : 'StudentInfo',
+			type : 'post',
+			data : {
+				request : 'viewall'
+			},
+			success : function(data) {
+				var allStudentInfo = JSON.parse(data);
+				if (allStudentInfo.length === 0) {
+					$('#error').show();
+					$('.table').hide();
+					$('.thead').hide();
+				} else {
+					$('#error').hide();
+					$('.table').show();
+					$('.thead').show();
+					for (var i = 0; i < allStudentInfo.length; i++) {
+						$('.tbody').append('<th scope="row">'+(i+1)+'</th>');
+						$('.tbody').append('<td>'+allStudentInfo[i].name+'</td>');
+						$('.tbody').append('<td>'+allStudentInfo[i].email+'</td>');
+						$('.tbody').append('<td>'+allStudentInfo[i].phonenumber+'</td>');
+						$('.tbody').append('<td>'+allStudentInfo[i].userName+'</td>');
+					 	$('.tbody').append('<td><button class="btn-warning btn" value='+allStudentInfo[i].id+'>Edit</button>&nbsp;&nbsp;&nbsp; <button class="btn-danger btn deleteStudent" value='+allStudentInfo[i].id+'>Delete</button></td>'); 
+					}
+				}
+			}
+		});
+
+		$('.delete').click(function(){
+			$.ajax({
+				url : 'StudentInfo',
+				type : 'post',
+				data : {
+					request : 'viewall'
+				},
+				success : function(data) {
+					
+				}
+			});
+			
+			
+		})
+		
+		
+		});
+
+	
+</script>
+</html>

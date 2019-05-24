@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chainsys.model.Student;
 import com.chainsys.services.StudentService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class StudentInfo
@@ -33,7 +35,6 @@ public class StudentInfo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("request");
-		System.out.println(action);
 		StudentService studentService= new StudentService();
 		RequestDispatcher requestDispatcher = null;
 		List<Student> studentDetailsList = null;
@@ -106,10 +107,13 @@ public class StudentInfo extends HttpServlet {
 			} catch (Exception e) {
 				message = "no results found";
 			}
-			request.setAttribute("message", message);
+			Gson gson=new GsonBuilder().setPrettyPrinting().create();
+			String studentList=gson.toJson(studentDetailsList);
+			response.getWriter().write(studentList);
+			/*request.setAttribute("message", message);
 			request.setAttribute("STUDENTlIST", studentDetailsList);
 			requestDispatcher = request.getRequestDispatcher("viewallstudent.jsp");
-			requestDispatcher.forward(request, response);
+			requestDispatcher.forward(request, response);*/
 
 			break;
 		case "editstudentprofile":
@@ -125,10 +129,13 @@ public class StudentInfo extends HttpServlet {
 			} catch (Exception e1) {
 				message = "No results found";
 			}
-			request.setAttribute("message", message);
+			gson=new GsonBuilder().setPrettyPrinting().create();
+			studentList=gson.toJson(editStudentProfile);
+			response.getWriter().write(studentList);
+			/*request.setAttribute("message", message);
 			request.setAttribute("STUDENTDETAILS", editStudentProfile);
 			requestDispatcher = request.getRequestDispatcher("editprofile.jsp");
-			requestDispatcher.forward(request, response);
+			requestDispatcher.forward(request, response);*/
 
 			break;
 		case "deletestudent":
@@ -140,21 +147,22 @@ public class StudentInfo extends HttpServlet {
 				boolean success = studentService.deleteStudent(deleteStudent);
 				if (success) {
 					deleteMessage = "delete successfully";
-					studentDetailsList = studentService.getAllStudentInfo();
+					/*studentDetailsList = studentService.getAllStudentInfo();
 					if (studentDetailsList.isEmpty()) {
 						message = "no results found";
-					}
+					}*/
 				} else {
-					deleteMessage = "delete successfully";
+					deleteMessage = "Unable to delete";
 				}
 			} catch (Exception e) {
 				deleteMessage = e.getMessage();
 			}
-			request.setAttribute("message", message);
+			response.getWriter().write(deleteMessage);
+			/*request.setAttribute("message", message);
 			request.setAttribute("deleteMessage", deleteMessage);
 			request.setAttribute("STUDENTlIST", studentDetailsList);
 			requestDispatcher = request.getRequestDispatcher("viewallstudent.jsp");
-			requestDispatcher.forward(request, response);
+			requestDispatcher.forward(request, response);*/
 			break;
 		case "updateprofile":
 			studentId = Integer.valueOf(request.getParameter("id"));
@@ -195,11 +203,11 @@ public class StudentInfo extends HttpServlet {
 			} catch (Exception e) {
 				updateMessage = e.getMessage();
 			}
-			System.out.println(studentDetailsList);
+			/*System.out.println(studentDetailsList);
 			request.setAttribute("updateMessage", updateMessage);
 			request.setAttribute("MESSAGE", message);
-			request.setAttribute("STUDENTlIST", studentDetailsList);
-			requestDispatcher = request.getRequestDispatcher("viewallstudent.jsp");
+			request.setAttribute("STUDENTlIST", studentDetailsList);*/
+			requestDispatcher = request.getRequestDispatcher("statistics.jsp");
 			requestDispatcher.forward(request, response);
 			break;
 		default:

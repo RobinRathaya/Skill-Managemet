@@ -4,7 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.chainsys.dao.CreateQuizDAO;
+import com.chainsys.model.Questions;
 import com.chainsys.model.Quiz;
+import com.chainsys.model.Score;
 
 public class CreateQuizService {
 
@@ -17,6 +19,11 @@ public class CreateQuizService {
 		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
 		return createQuizDAO.upcomingQuiz();
 	}
+	
+	public Quiz getQuizInfo(Quiz quizDetails) throws SQLException {
+		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
+		return createQuizDAO.getQuizById(quizDetails);
+	}
 
 	public List<Quiz> getCompletedQuiz() throws SQLException {
 		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
@@ -27,5 +34,22 @@ public class CreateQuizService {
 		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
 		return createQuizDAO.cancelQuiz(quiz);
 	}
+		
+	public List<Questions> takeTest(Quiz quiz) throws SQLException {
+		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
+		return createQuizDAO.getQuizQuestion(quiz);
+	}
+	
+	public int addTestScore(Score score) throws SQLException {
+		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
+		return createQuizDAO.addScore(score);
+	}
+	
+	public Score getTestScoreByQuizId(Score score) throws SQLException {
+		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
+		return createQuizDAO.getTestScoreByQuizId(score);
+	}
+	
 
 }
+  

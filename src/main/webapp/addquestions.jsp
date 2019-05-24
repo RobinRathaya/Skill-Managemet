@@ -2,7 +2,7 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
-			Add Topic <small>Create New Topic</small>
+			Add Questions <small>Create New Questions</small>
 		</h1>
 	</section>
 
@@ -10,9 +10,10 @@
 	<section class="content container-fluid">
 		<div class="container">
 			<div class="row">
-				<form class="form-quest" method="post" action="AddQuestion">
-					<div class="container">
-						<div class="row">
+				<div class='col-md-2'></div>
+				<form class="form-quest col-md-8" method="post" action="AddQuestion">
+					<div>
+						<div>
 							<div class="form-group col-md-12">
 								<label for="exampleFormControlSelect1">Select Topic</label> <select
 									class="form-control select-topic"
@@ -22,27 +23,27 @@
 							<div class="form-group col-md-12">
 								<label for="exampleFormControlTextarea1">Question</label>
 								<textarea name="question" class="form-control"
-									id="exampleFormControlTextarea1" rows="3"></textarea>
+									id="exampleFormControlTextarea1" rows="3" required></textarea>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleFormControlInput1">Option 1</label> <input
 									type="text" name="option1" class="form-control"
-									id="exampleFormControlInput1" placeholder="Option 1">
+									id="exampleFormControlInput1" placeholder="Option 1" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleFormControlInput1">Option 2</label> <input
 									type="text" name="option2" class="form-control"
-									id="exampleFormControlInput1" placeholder="Option 2">
+									id="exampleFormControlInput1" placeholder="Option 2" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleFormControlInput1">Option 3</label> <input
 									type="text" name="option3" class="form-control"
-									id="exampleFormControlInput1" placeholder="Option 3">
+									id="exampleFormControlInput1" placeholder="Option 3" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleFormControlInput1">Option 4</label> <input
 									type="text" name="option4" class="form-control"
-									id="exampleFormControlInput1" placeholder="Option 4">
+									id="exampleFormControlInput1" placeholder="Option 4" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleFormControlSelect1">Answer select</label> <select
@@ -60,14 +61,15 @@
 						</div>
 					</div>
 				</form>
+				<div class='col-md-2'></div>
 			</div>
 			<%
 				if (request.getAttribute("message") != null) {
 					String alertMsg = (String) request.getAttribute("message");
 					if (alertMsg.equals("success")) {
-						out.print("<script>alert(('Topic add successfully'));</script>");
+						out.print("<script>alert(('Question added'));</script>");
 					} else if (alertMsg.equals("failed")) {
-						out.print("<script>alert(('Topic failed to add'));</script>");
+						out.print("<script>alert(('Question failed to add'));</script>");
 					}
 					else{
 						out.print("<script>alert(('Invalid input'));</script>");

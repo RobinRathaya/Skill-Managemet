@@ -5,22 +5,26 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import com.chainsys.customExceptions.DuplicateException;
 import com.chainsys.customExceptions.InvalidFileExceptions;
-import com.chainsys.customExceptions.TestifyExceptions;
 import com.chainsys.dao.TopicsDAO;
 
 public class Validator {
 
-	public Boolean checkForTopic(String topicName) throws Exception {
+	public Boolean checkForTopic(String topicName) throws DuplicateException {
 		Boolean isNotContain = false;
 		TopicsDAO topicsDAO = new TopicsDAO();
-		if (!topicsDAO.getTopics().contains(topicName)) {
-			isNotContain = true;
-		} else {
-			throw new DuplicateException("The " + topicName + " is already present");
+		try {
+			if (!topicsDAO.getTopics().contains(topicName)) {
+				isNotContain = true;
+			} else {
+				throw new DuplicateException("The " + topicName + " is already present");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return isNotContain;
 	}
-	public Boolean checkForTemplate(Sheet sheet,String fileName) throws TestifyExceptions {
+	public Boolean checkForTemplate(Sheet sheet,String fileName) throws InvalidFileExceptions {
 		Boolean isTrue = false;
 		Row row = sheet.getRow(0);
 		if ((row.getCell(0)).toString().equalsIgnoreCase("Questions")

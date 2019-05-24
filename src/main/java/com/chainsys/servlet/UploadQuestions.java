@@ -5,15 +5,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.chainsys.customExceptions.TestifyExceptions;
 import com.chainsys.model.Topics;
 import com.chainsys.services.QuestionService;
 import com.chainsys.services.TopicService;
@@ -63,6 +66,7 @@ public class UploadQuestions extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		RequestDispatcher rd=null;
 		if (ServletFileUpload.isMultipartContent(request)) {
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 			factory.setSizeThreshold(maxFileSize);
@@ -71,6 +75,7 @@ public class UploadQuestions extends HttpServlet {
 			servletFileUpload.setFileSizeMax(maxFileSize);
 			servletFileUpload.setSizeMax(maxRequestSize);
 			String uploadPath = "C:\\Users\\robi2116\\Downloads\\";
+			
 			try {
 				QuestionService questionService = new QuestionService();
 				List<FileItem> formItems = servletFileUpload.parseRequest(request);
@@ -87,10 +92,21 @@ public class UploadQuestions extends HttpServlet {
 							filePath = uploadPath + File.separator + fileName;
 						}
 					}
-					questionService.importFromExcel(filePath, topicId, fileName);
+					Boolean status = questionService.importFromExcel(filePath, topicId, fileName);
+					if (status) {
+						request.setAttribute("message", "success");
+					} else {
+						request.setAttribute("message", "failed");
+					}
+				} else {
+					request.setAttribute("message", "Invalid data");
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+				rd=request.getRequestDispatcher("bulkquestions.jsp");
+				rd.forward(request, response);
+			} catch (TestifyExceptions | FileUploadException e) {
+				request.setAttribute("message", "failed");
+				rd = request.getRequestDispatcher("bulkquestions.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}

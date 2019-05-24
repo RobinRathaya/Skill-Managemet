@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.chainsys.customExceptions.InvalidFileExceptions;
 import com.chainsys.dao.QuestionsDAO;
 import com.chainsys.dao.TopicsDAO;
 import com.chainsys.model.Questions;
@@ -19,7 +20,8 @@ import com.chainsys.model.Topics;
 import com.chainsys.validation.Validator;
 
 public class QuestionService {
-	public Boolean importFromExcel(String filePath, int topicId, String fileName) throws Exception {
+	public Boolean importFromExcel(String filePath, int topicId, String fileName) throws InvalidFileExceptions {
+		Boolean status = false;
 		try {
 			Workbook workbook = WorkbookFactory.create(new File(filePath));
 			Validator validator = new Validator();
@@ -29,6 +31,7 @@ public class QuestionService {
 				TopicsDAO topicsDAO = new TopicsDAO();
 				Topics topic = new Topics();
 				topic.setId(topicId);
+				System.out.println(topicId);
 				topic.setName(topicsDAO.selectTopicNameById(topicId));
 				ArrayList<Questions> questionList = new ArrayList<Questions>();
 				QuestionsDAO questionsDAO = new QuestionsDAO();
@@ -43,9 +46,12 @@ public class QuestionService {
 					} else {
 						continue;
 					}
+					System.out.println(questionList);
 				}
-				System.out.println(questionList);
-				questionsDAO.addBatchOfQueestions(questionList);
+				int[] counts = questionsDAO.addBatchOfQueestions(questionList);
+				if (counts.length > 0) {
+					status = true;
+				}
 			}
 		} catch (EncryptedDocumentException e) {
 			e.printStackTrace();
@@ -54,7 +60,7 @@ public class QuestionService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return status;
 	}
 
 	public String addQuestion(Questions question, String[] options, int optionId) {
@@ -74,4 +80,5 @@ public class QuestionService {
 		}
 		return message;
 	}
+	
 }

@@ -10,8 +10,8 @@
 	<section class="content container-fluid">
 		<div class="container">
 			<div class="row">
-
-				<form class="col s12 add-form" method="POST" action="AddTopics">
+				<div class='col-md-2'></div>
+				<form class="col-md-8 add-form" method="POST" action="AddTopics">
 					<div class="form-group">
 						<label class="add-label" for="exampleInputPassword1">Topic
 							Name</label> <input type="text" class="form-control"
@@ -19,6 +19,7 @@
 					</div>
 					<button type="submit" class="btn btn-primary">Add Topic</button>
 				</form>
+				<div class='col-md-2'></div>
 			</div>
 			<%
 				if (request.getAttribute("message") != null) {

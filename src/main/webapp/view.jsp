@@ -36,9 +36,10 @@ $(document).ready(function(){
         uniqueTopics.forEach((t,i) => {
            	$("#accordionExample").append("<div class='card " + t + "'><div class='card-header' id='heading"+i+"'><h2 class='mb-0'><button class='btn btn-link collapsed' type='button' data-toggle='collapse' data-target='#collapse"+i+"' aria-expanded='false' aria-controls='collapse"+i+"'>" + t + "</button></h2></div><div>");
            	$("." + t).append("<div id='collapse"+i+"' class='collapse' aria-labelledby='heading"+i+"' data-parent='#accordionExample'><div class='card-body "+t+"a'></div></div>");
-        })
+        });
         for (var key in questions) {
         	questions[key].forEach((q,i) => {
+        		var answer = q.answers;
         		var index = i+1;
         		var options = q.options.split(/\s*,\s*/);
         		var className = key+i;
@@ -47,7 +48,8 @@ $(document).ready(function(){
         		options.forEach((o, j) => {
         			var index ="*";
         			$(".abc"+className).append("<br>" + index + " " + o + "");	
-        		})
+        		});
+        		$(".abc"+className).append("<br>Answer: " + answer + "");
         	})
         }
     }});

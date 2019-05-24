@@ -1,13 +1,9 @@
-body{
-	height: 100vh;
-}
-
 .main-cont {
     margin-top: 40px;
 }
 
 .box-container {
-	margin-top: 30px;
+    margin-top: 20px;
     color: white;
     height: 150px;
     width: 75%;

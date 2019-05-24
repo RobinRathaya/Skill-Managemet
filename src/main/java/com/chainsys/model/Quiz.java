@@ -12,6 +12,13 @@ public class Quiz {
 	private LocalDate expiredDate;
 	private int status;
 	private int attendedCount;
+	private int noOfQuestion;
+	public int getNoOfQuestion() {
+		return noOfQuestion;
+	}
+	public void setNoOfQuestion(int noOfQuestion) {
+		this.noOfQuestion = noOfQuestion;
+	}
 	public int getId() {
 		return id;
 	}

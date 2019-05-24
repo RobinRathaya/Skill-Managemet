@@ -25,6 +25,8 @@
                                 id="name"
                                 type="text"
                                 class="validate"
+                                pattern="[A-Za-z]{1,}"
+								title="Cannot Contain Numbers"
                                 required
                             />
                             <label for="name">Name</label>
@@ -36,6 +38,8 @@
                                 id="email"
                                 type="email"
                                 class="validate"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+								title="Invalid Email Address"
                                 required
                             />
                             <label for="email">Email</label>
@@ -45,8 +49,10 @@
                         <div class="input-field col s12">
                             <input
                                 id="phoneNumber"
-                                type="number"
+                                type="text"
                                 class="validate"
+                                pattern="[7-9]{1}[0-9]{9}"
+                                title="Enter a Valid Phone Number"
                                 required
                             />
                             <label for="phoneNumber">Phone Number</label>

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.chainsys.model.Questions;
 import com.chainsys.model.Topics;
 import com.chainsys.util.ConnectionUtil;
@@ -17,6 +19,7 @@ import com.chainsys.util.ConnectionUtil;
  *
  */
 public class QuestionsDAO {
+	Logger log=Logger.getLogger("CreateQuizDAO");
 
 	/**
 	 * Create a new question 
@@ -28,6 +31,7 @@ public class QuestionsDAO {
 	public int addNewQuestion(Questions question) throws Exception {
 		Connection connection = ConnectionUtil.getConnection();
 		String query = "INSERT INTO quiz_questions VALUES(QUIZEVAL_QUES_SEQ.nextVal,?,?,?,?)";
+		log.debug("Query"+query);
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, question.getQuestion());
 		preparedStatement.setInt(2, question.getTopic().getId());
@@ -44,11 +48,12 @@ public class QuestionsDAO {
 	 * @param questionsList a ArrayList of questions included members of question class
 	 * @return rowCount the count of effect rows
 	 */
-	public int addBatchOfQueestions(ArrayList<Questions> questionsList) {
-
+	public int[] addBatchOfQueestions(ArrayList<Questions> questionsList) {
+		int[] count = null;
 		try {
 			Connection connection = ConnectionUtil.getConnection();
 			String query = "INSERT INTO quiz_questions VALUES(QUIZEVAL_QUES_SEQ.nextVal,?,?,?,?)";
+			log.debug("Query"+query);
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			for (Questions question : questionsList) {
 				preparedStatement.setString(1, question.getQuestion());
@@ -57,11 +62,12 @@ public class QuestionsDAO {
 				preparedStatement.setString(4, question.getAnswers());
 				preparedStatement.addBatch();
 			}
-			preparedStatement.executeBatch();
+			count=preparedStatement.executeBatch();
 		} catch (Exception e) {
+			log.error("Exception catched"+e.getMessage());
 			e.printStackTrace();
 		}
-		return 0;
+		return count;
 	}
 
 	public List<Questions> viewByTopic(String topic) throws Exception {
@@ -69,6 +75,7 @@ public class QuestionsDAO {
 		Questions question = null;
 		Connection connection = ConnectionUtil.getConnection();
 		String query = "SELECT q.ques_id,q.question,q.topic_id,q.level_id,topic_name,level_name FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id AND t.topic_name = ? ) AS topic_name INNER JOIN quiz_levels l ON (q.level_id = l.level_id) AS level";
+		log.debug("Query"+query);
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, topic);
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -88,6 +95,7 @@ public class QuestionsDAO {
 		ArrayList<Questions> listOfQues = new ArrayList<Questions>();
 		Connection connection = ConnectionUtil.getConnection();
 		String query = "SELECT q.ques_id AS quesid,q.question AS ques,q.topic_id AS topicid,t.topic_name AS topicname,q.options AS options,q.answer as answer FROM quiz_questions q INNER JOIN quiz_topics t ON (t.topic_id = q.topic_id)";
+		log.debug("Query"+query);
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {

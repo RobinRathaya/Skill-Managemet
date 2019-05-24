@@ -126,6 +126,7 @@ desired effect
                             <ul class="treeview-menu">
                                 <li><a href="addstudent.jsp">Add Students</a></li>
                                 <li><a href="bulkquestions.jsp">Add Bulk Students</a></li>
+                                 <li><a href="statistics.jsp">Student Management</a></li>
                             </ul>
                         </li>
                         <li>

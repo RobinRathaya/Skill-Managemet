@@ -11,11 +11,12 @@
 	<section class="content container-fluid">
 		<div class="container">
 			<div class="row">
-				<form class="form-quest" action="TestManagement" method="post">
-					<div class="container">
-						<div class="row">
+				<div class='col-md-2'></div>
+				<form class="form-quest col-md-8" action="TestManagement" method="post">
+					<div>
+						<div>
 							<div class="form-group col-md-12">
-								<label for="exampleFormControlSelect1">Example select</label> <select
+								<label for="exampleFormControlSelect1">Topic select</label> <select
 									class="form-control select-topic"
 									id="exampleFormControlSelect1" name="topic">
 								</select>
@@ -23,17 +24,17 @@
 							<div class="form-group col-md-12">
 								<label for="exampleInputPassword1">Quiz Name</label> <input
 									type="text" class="form-control" id="exampleInputPassword1"
-									placeholder="Quiz Name" name="quizname">
+									placeholder="Quiz Name" name="quizname" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleInputPassword2">Quiz Time</label> <input
 									type="time" class="form-control" id="exampleInputPassword2"
-									name="quiztime">
+									name="quiztime" required>
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleInputPassword2">Quiz Expiry Date</label> <input
 									type="date" class="form-control" id="exampleInputPassword2"
-									name="quizexpirydate">
+									name="quizexpirydate" required>
 							</div>
 							<div class="col-md-3"></div>
 							<div class="form-group col-md-6 text-center">
@@ -44,6 +45,7 @@
 						</div>
 					</div>
 				</form>
+				<div class='col-md-2'></div>
 			</div>
 		</div>
 	</section>

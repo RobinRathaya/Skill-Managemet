@@ -17,7 +17,7 @@
     <body>
         <nav class="nav-bar">
             <div class="left-container">
-                <a href="exam.html" class="link-nav"
+                <a href="userdashboard.jsp" class="link-nav"
                     ><i class="fas fa-question-circle icon"></i> Exams</a
                 >
                 <a href="#" class="link-nav active"
@@ -46,12 +46,8 @@
                                 <th scope="col">Incorrect Answers</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                            </tr>
+                        <tbody id='tBody'>
+                       
                         </tbody>
                     </table>
                 </div>
@@ -59,4 +55,19 @@
             </div>
         </div>
     </body>
+    <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    	
+    	$.post('TestManagement',{request:'getTestScore'},function(data){
+    		var result=JSON.parse(data);
+    		result.forEach(function(r, i){    			
+   	    		$('#tBody').append('<tr><th scope="row">' + r.quiz.name + '</th><td>' + r.correct + '</td><td>' + r.inCorrect + '</td></tr>');
+    		})
+    	});
+    	
+    });
+    
+    </script>
 </html>

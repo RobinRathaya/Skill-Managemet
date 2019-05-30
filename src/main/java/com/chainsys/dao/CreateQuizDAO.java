@@ -265,19 +265,20 @@ public class CreateQuizDAO {
 		return rowCount;
 	}
 	
-	public Score getTestScoreByQuizId(Score scoreDetails) throws SQLException {
+	public List<Score> getTestScoreByQuizId(Score scoreDetails) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		Score score=new Score();
+		List<Score> scoreList=new ArrayList<>();
 		try {
 			connection = ConnectionUtil.getConnection();
-			String query = "select t.quiz_name,qt.topic_name,s.correct,s.incorrect from trn_score s inner join quiz_test t on s.quiz_id=t.id inner join quiz_topics qt on qt.topic_id=t.topic where s.quiz_id=?";
+			String query = "select t.quiz_name,qt.topic_name,s.correct,s.incorrect from trn_score s inner join quiz_test t on s.quiz_id=t.id inner join quiz_topics qt on qt.topic_id=t.topic where s.student_id=?";
 			log.debug("Query"+query);
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setInt(1, scoreDetails.getQuiz().getId());
+			preparedStatement.setInt(1, scoreDetails.getStudent().getId());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
+				Score score=new Score();
 				Quiz quiz=new Quiz();
 				quiz.setName(resultSet.getString("quiz_name"));
 				score.setQuiz(quiz);
@@ -286,6 +287,7 @@ public class CreateQuizDAO {
 				score.setTopics(topics);
 				score.setCorrect(resultSet.getInt("correct"));
 				score.setInCorrect(resultSet.getInt("incorrect"));
+				scoreList.add(score);
 			}
 		} catch (Exception e) {
 			log.error("Exception catched"+e.getMessage());
@@ -293,7 +295,7 @@ public class CreateQuizDAO {
 		} finally {
 			ConnectionUtil.close(connection, preparedStatement, resultSet);
 		}
-		return score;
+		return scoreList;
 
 	}
 	

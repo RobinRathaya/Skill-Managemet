@@ -33,7 +33,7 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="exampleInputPassword2">Quiz Expiry Date</label> <input
-									type="date" class="form-control" id="exampleInputPassword2"
+									type="date" class="form-control datepicker" id="exampleInputPassword2"
 									name="quizexpirydate" required>
 							</div>
 							<div class="col-md-3"></div>
@@ -67,7 +67,23 @@
 <!-- /.content-wrapper -->
 </div>
 <script>
-$(document).ready(function() { $.ajax({url: "UploadQuestions", success:
+$(document).ready(function() { 
+	var date = new Date();
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+	var year = date.getFullYear();
+	if (month < 10) {
+		month = '0' + month;
+	}
+	if (date < 10) {
+		day = '0' + day;
+	}
+	var newDate = year + '-' + month + '-' + day;
+	$( ".datepicker" ).attr({
+		min: newDate 
+	});
+	
+$.ajax({url: "UploadQuestions", success:
 function(res){ var data = JSON.parse(res);
 $(".select-topic").empty();
 data.forEach((d,i) => { var index = (i + 1); $(".select-topic").append("<option value=" + d.id + ">" + d.name + "</option>"); }); }}); });

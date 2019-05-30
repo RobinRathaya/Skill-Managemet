@@ -2,7 +2,7 @@
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
-			Add Topic <small>Create New Topic</small>
+			View Questions <small>view all the topics and questions	</small>
 		</h1>
 	</section>
 

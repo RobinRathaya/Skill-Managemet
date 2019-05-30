@@ -45,7 +45,7 @@ public class CreateQuizService {
 		return createQuizDAO.addScore(score);
 	}
 	
-	public Score getTestScoreByQuizId(Score score) throws SQLException {
+	public List<Score> getTestScoreByQuizId(Score score) throws SQLException {
 		CreateQuizDAO createQuizDAO = new CreateQuizDAO();
 		return createQuizDAO.getTestScoreByQuizId(score);
 	}

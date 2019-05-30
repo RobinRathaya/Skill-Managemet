@@ -64,12 +64,14 @@
     			$("#tableBody").append('<tr><th scope="row">'+t.name+'</th><td><i class="fas fa-calendar-day inner-icon-div"></i> '+t.expiredDate.day+'/'+t.expiredDate.month+'/'+t.expiredDate.year+'</td><td><div class="divcont"><div><i class="fas fa-clipboard-list inner-icon-div"></i>'+t.topics.name+'</div><div><i class="fas fa-question-circle inner-icon-div"></i>'+t.noOfQuestion+' Questions</div><div><i class="fas fa-clock inner-icon-div"></i> '+t.durationTime.hour+':'+t.durationTime.minute+':'+t.durationTime.second+'</div></div></td><td class="cont-div-cent"><button value='+t.id+' class="btn btn-success takeTest">Start</button></td></tr>');    			
     		});
     	});
-    	
+    	$.post('StudentInfo',{request:'getStudentInfo'},function(data){
+    		var studentInfo = JSON.parse(data);
+    		console.log(studentInfo);
+    	});
     	$(document).on('click','.takeTest',function(e){
     		var quizId=e.target.value;
     		window.location="starttest.jsp?quiz_id="+quizId;
     	});
-    	
-    })
+    });
     </script>
 </html>

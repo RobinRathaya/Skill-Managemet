@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,6 +60,7 @@ public class TestManagement extends HttpServlet {
 		List<Quiz> upcomingQuizList = null;
 		List<Questions> questionList = null;
 		HttpSession httpSession = request.getSession(false);
+		int studentId=0;
 		switch (action) {
 		case "addquiz":
 			String topic = request.getParameter("topic");
@@ -215,7 +215,8 @@ public class TestManagement extends HttpServlet {
 				}
 				score.setQuiz(quiz);
 				Student student=new Student();
-				student.setId(1);
+				studentId=Integer.parseInt(httpSession.getAttribute("STUDENTID").toString());
+				student.setId(studentId);
 				score.setStudent(student);
 				score.setCorrect(rightQues);
 				score.setInCorrect(questionList.size()-rightQues);
@@ -233,16 +234,20 @@ public class TestManagement extends HttpServlet {
 			}
 			break;
 		case "getTestScore":
-			quizId = httpSession.getAttribute("quizId").toString();
+			/*quizId = httpSession.getAttribute("quizId").toString();
 			quiz = new Quiz();
-			quiz.setId(Integer.parseInt(quizId));
+			quiz.setId(Integer.parseInt(quizId));*/
 			score=new Score();
-			score.setQuiz(quiz);
+			/*score.setQuiz(quiz);*/
+			studentId=Integer.parseInt(httpSession.getAttribute("STUDENTID").toString());
+			Student student=new Student();
+			student.setId(studentId);
+			score.setStudent(student);
 			String testResult="";
 			try {
-				Score result=createQuizService.getTestScoreByQuizId(score);
+				List<Score> resultList=createQuizService.getTestScoreByQuizId(score);
 				gson=new Gson();
-				testResult=gson.toJson(result);
+				testResult=gson.toJson(resultList);
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
